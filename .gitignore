@@ -3,7 +3,7 @@
 
 # Vue
 # */dist/*
-index.html
+vue/index.html
 main.js
 main.vue
 
