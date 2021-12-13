@@ -7,7 +7,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Serve static LIFF file
-app.use(express.static(__dirname + '/vue/dist'));
+app.use('/', express.static(__dirname + '/vue/dist'));
 
 const API_URL = process.env.API_URL;
 
