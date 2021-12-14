@@ -25,7 +25,7 @@ app.post('/webhook', line.middleware(config), (req, res) => {
   });
 });
 
-function handleEvent(event) {
+async function handleEvent(event) {
   console.log(event);
   if (event.type === 'message' && event.message.type === 'text') {
     handleMessageEvent(event);
@@ -64,7 +64,7 @@ function handleMessageEvent(event) {
     case /สภาพอากาศ(?= ([A-Z]|[a-z]))/.test(eventText):
       let city = eventText.split(' ')[1];
       // weather API
-      let result = weather(city);
+      let result = await weather(city);
       console.log(result);
       result
         .then((result) => {
