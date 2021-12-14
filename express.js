@@ -65,7 +65,9 @@ async function handleMessageEvent(event) {
       let city = eventText.split(' ')[1];
       // weather API
       let result = await weather(city);
-      msg.text = `${result.location.name} ${result.current.condition.text}`;
+      result.then((res) => {
+        msg.text = `${res.location.name} ${res.current.condition.text}`;
+      });
       break;
   }
 
