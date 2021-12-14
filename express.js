@@ -93,11 +93,11 @@ async function weather(city) {
   axios
     .post(API_URL + '/getWeatherByCity', { city: city })
     .then((response) => {
-      return response.data;
+      return Promise.resolve(response.data);
     })
     .catch((error) => {
       console.log(error.message);
-      return false;
+      return Promise.reject(null);
     });
 }
 
