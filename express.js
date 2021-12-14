@@ -63,9 +63,15 @@ async function handleMessageEvent(event) {
     case /อากาศ(?= ([A-Z]|[a-z]))/.test(eventText):
     case /สภาพอากาศ(?= ([A-Z]|[a-z]))/.test(eventText):
       let city = eventText.split(' ')[1];
+      try {
+        let result = await weather(city);
+        msg.text = `${result.location.name} ${result.current.condition.text}`;
+      } catch (error) {
+        console.log(error.msg);
+        msg.text = 'Fail';
+      }
       // weather API
-      let result = await weather(city);
-      msg.text = `${result.location.name} ${result.current.condition.text}`;
+     
       break;
   }
 
@@ -91,8 +97,7 @@ function weather(city) {
         return resolve(response.data);
       })
       .catch((error) => {
-        console.log(error);
-        return reject(error);
+        return reject(error.data);
       });
   });
 }
