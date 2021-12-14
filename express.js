@@ -64,14 +64,8 @@ async function handleMessageEvent(event) {
     case /สภาพอากาศ(?= ([A-Z]|[a-z]))/.test(eventText):
       let city = eventText.split(' ')[1];
       // weather API
-      await weather(city)
-        .then((res) => {
-          console.log(res);
-          msg.text = `${res.location.name} ${res.current.condition.text}`;
-        })
-        .catch((error) => {
-          console.log(error.message);
-        });
+      let result = weather(city);
+      msg.text = `${result.location.name} ${result.current.condition.text}`;
       break;
   }
 
@@ -89,15 +83,15 @@ function watering(event) {
   });
 }
 
-async function weather(city) {
+function weather(city) {
   axios
     .post(API_URL + '/getWeatherByCity', { city: city })
     .then((response) => {
-      return Promise.resolve(response.data);
+      return response.data;
     })
     .catch((error) => {
       console.log(error.message);
-      return Promise.reject(null);
+      return null;
     });
 }
 
