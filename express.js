@@ -67,7 +67,7 @@ async function handleMessageEvent(event) {
       // weather API
       try {
         let result = await weather(city);
-        msg.text = `${result.location.name} ${result.current.condition.text}`;
+        msg.text = `${result.location.country} ${result.location.name} ${result.location.region} ${result.current.condition.text}`;
       } catch (error) {
         msg.text =
           "Fail to get the weather from your request, Maybe check the city's name";
