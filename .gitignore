@@ -4,8 +4,8 @@
 # Vue
 # */dist/*
 vue/index.html
-main.js
-main.vue
+vue/main.js
+vue/main.vue
 
 # local env files
 .env.local
