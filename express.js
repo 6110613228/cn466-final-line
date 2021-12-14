@@ -75,6 +75,9 @@ async function handleMessageEvent(event) {
       }
 
       break;
+    case /info(?= [0-9])/.test(eventText):
+    case /ข้อมูลกระถาง(?= [0-9])/.test(eventText):
+      break;
   }
 
   if (send_flag) {
