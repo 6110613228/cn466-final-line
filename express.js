@@ -79,13 +79,21 @@ async function handleMessageEvent(event) {
       try {
         let textArr = eventText.split(' ');
         let bid = parseInt(textArr[1]);
+
+        // Calling info api
         let result = await getBInfo(bid);
+
+        // assign variables
+        let board = result.board;
+        let weather = result.weather;
+
+        // Generate reply message
         msg = [
           {
             type: 'text',
-            text: `Board${result.board.BID}\ntemp: ${result.board.temperature} humidity: ${result.board.humidity}\npressure: ${result.board.pressure}\nAt: ${result.board.timestamp}`,
+            text: `Board ${board.BID} Info\nTemperature: ${board.temperature} Humidity: ${board.humidity}\nPressure: ${board.pressure}\nAt: ${board.timestamp}`,
           },
-          { type: 'text', text: 'Text2' },
+          { type: 'text', text: `${weather.location.name} ${weather.location.region}, ${weather.location.country} is ${weather.current.condition.text}` },
         ];
       } catch (error) {
         console.log(error.data);
