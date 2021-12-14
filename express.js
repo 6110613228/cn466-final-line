@@ -77,6 +77,22 @@ async function handleMessageEvent(event) {
       break;
     case /info(?= [0-9])/.test(eventText):
     case /ข้อมูลกระถาง(?= [0-9])/.test(eventText):
+      let textArr = eventText.split(' ');
+      let bid = parseInt(textArr[1]);
+
+      try {
+        let result = await getBInfo(bid);
+        msg = [
+          {
+            type: 'text',
+            text: `Board${result.board.BID}\ntemp: ${result.board.temperature} humidity: ${result.board.humidity}\npressure: ${result.board.pressure}\nAt: ${result.board.timestamp}`,
+          },
+          { type: 'text', text: "Text2" },
+        ];
+      } catch (error) {
+        console.log(error.data);
+        msg.text = 'Fail to get informations, Try checking the given ID';
+      }
       break;
   }
 
@@ -104,6 +120,38 @@ function weather(city) {
       .catch((error) => {
         reject(error.data);
       });
+  });
+}
+
+function getBInfo(bid) {
+  return new Promise((resolve, reject) => {
+    let result = {};
+
+    await axios
+      .get(API_URL + '/getLastData/' + bid)
+      .then((response) => {
+        if (response.data.result) {
+          result['board'] = response.data.data;
+        } else {
+          reject(response.data.msg);
+        }
+      })
+      .catch((error) => {
+        result['board'] = null;
+      });
+
+    await axios
+      .post(API_URL + '/getWeatherByCity', {
+        city: result.board.location,
+      })
+      .then((response) => {
+        result['weather'] = response.data;
+      })
+      .catch((error) => {
+        result['weather'] = error.data;
+      });
+
+    resolve(result);
   });
 }
 
