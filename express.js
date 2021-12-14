@@ -63,15 +63,16 @@ async function handleMessageEvent(event) {
     case /อากาศ(?= ([A-Z]|[a-z]))/.test(eventText):
     case /สภาพอากาศ(?= ([A-Z]|[a-z]))/.test(eventText):
       let city = eventText.split(' ')[1];
+
+      // weather API
       try {
         let result = await weather(city);
         msg.text = `${result.location.name} ${result.current.condition.text}`;
       } catch (error) {
-        console.log(error);
-        msg.text = 'Fail';
+        msg.text =
+          "Fail to get the weather from your request, Maybe check city's name";
       }
-      // weather API
-     
+
       break;
   }
 
