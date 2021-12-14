@@ -64,9 +64,9 @@ async function handleMessageEvent(event) {
     case /สภาพอากาศ(?= ([A-Z]|[a-z]))/.test(eventText):
       let city = eventText.split(' ')[1];
       // weather API
-      let result = await weather(city);
-      result
+      weather(city)
         .then((res) => {
+          console.log(res);
           msg.text = `${res.location.name} ${res.current.condition.text}`;
         })
         .catch((error) => {
