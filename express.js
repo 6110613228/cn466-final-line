@@ -65,7 +65,7 @@ async function handleMessageEvent(event) {
       let city = eventText.split(' ')[1];
       // weather API
       let result = await weather(city);
-      msg.text = result;
+      msg.text = `${result.location.name} ${result.current.condition.text}`;
       break;
   }
 
@@ -87,7 +87,6 @@ async function weather(city) {
   axios
     .post(API_URL + '/getWeatherByCity', { city: city })
     .then((response) => {
-      console.log(response.data);
       return response.data;
     })
     .catch((error) => {
