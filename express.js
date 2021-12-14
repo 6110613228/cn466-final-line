@@ -84,16 +84,9 @@ function watering(event) {
   });
 }
 
-function weather(city) {
-  axios
-    .post(API_URL + '/getWeatherByCity', { city: city })
-    .then((response) => {
-      return response.data;
-    })
-    .catch((error) => {
-      console.log(error.message);
-      return null;
-    });
+async function weather(city) {
+  let result = await axios.post(API_URL + '/getWeatherByCity', { city: city });
+  return result.data;
 }
 
 app.listen(PORT, () => {
