@@ -65,7 +65,6 @@ async function handleMessageEvent(event) {
       let city = eventText.split(' ')[1];
       // weather API
       let result = await weather(city);
-      console.log(result);
       msg.text = `${result.location.name} ${result.current.condition.text}`;
       break;
   }
@@ -92,6 +91,7 @@ function weather(city) {
         return resolve(response.data);
       })
       .catch((error) => {
+        console.log(error);
         return reject(error);
       });
   });
