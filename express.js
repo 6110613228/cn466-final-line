@@ -70,7 +70,7 @@ async function handleMessageEvent(event) {
         msg.text = `${result.location.name} ${result.current.condition.text}`;
       } catch (error) {
         msg.text =
-          "Fail to get the weather from your request, Maybe check city's name";
+          "Fail to get the weather from your request, Maybe check the city's name";
       }
 
       break;
@@ -95,10 +95,10 @@ function weather(city) {
     axios
       .post(API_URL + '/getWeatherByCity', { city: city })
       .then((response) => {
-        return resolve(response.data);
+        resolve(response.data);
       })
       .catch((error) => {
-        return reject(error.data);
+        reject(error.data);
       });
   });
 }
