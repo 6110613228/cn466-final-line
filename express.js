@@ -66,7 +66,13 @@ function handleMessageEvent(event) {
       // weather API
       let result = weather(city);
       console.log(result);
-      msg.text = `${result.location.name} ${result.current.condition.text}`;
+      result
+        .then((result) => {
+          msg.text = `${result.location.name} ${result.current.condition.text}`;
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
       break;
   }
 
@@ -84,9 +90,17 @@ function watering(event) {
   });
 }
 
-async function weather(city) {
-  let result = await axios.post(API_URL + '/getWeatherByCity', { city: city });
-  return result.data;
+function weather(city) {
+  return new Promise((resolve, reject) => {
+    axios
+      .post(API_URL + '/getWeatherByCity', { city: city })
+      .then((response) => {
+        return resolve(response.data);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
 }
 
 app.listen(PORT, () => {
