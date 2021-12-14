@@ -62,11 +62,10 @@ async function handleMessageEvent(event) {
     case /อากาศตอนนี้(?= ([A-Z]|[a-z]))/.test(eventText):
     case /อากาศ(?= ([A-Z]|[a-z]))/.test(eventText):
     case /สภาพอากาศ(?= ([A-Z]|[a-z]))/.test(eventText):
-      let textArr = eventText.split(' ');
-      let city = textArr.slice(1).join(' ');
-
       // weather API
       try {
+        let textArr = eventText.split(' ');
+        let city = textArr.slice(1).join(' ');
         let result = await weather(city);
         msg.text = `query: ${city} => ${result.location.country} ${result.location.name} ${result.location.region} ${result.current.condition.text}`;
       } catch (error) {
@@ -77,17 +76,16 @@ async function handleMessageEvent(event) {
       break;
     case /info(?= [0-9])/.test(eventText):
     case /ข้อมูลกระถาง(?= [0-9])/.test(eventText):
-      let textArr = eventText.split(' ');
-      let bid = parseInt(textArr[1]);
-
       try {
+        let textArr = eventText.split(' ');
+        let bid = parseInt(textArr[1]);
         let result = await getBInfo(bid);
         msg = [
           {
             type: 'text',
             text: `Board${result.board.BID}\ntemp: ${result.board.temperature} humidity: ${result.board.humidity}\npressure: ${result.board.pressure}\nAt: ${result.board.timestamp}`,
           },
-          { type: 'text', text: "Text2" },
+          { type: 'text', text: 'Text2' },
         ];
       } catch (error) {
         console.log(error.data);
