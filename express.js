@@ -34,7 +34,7 @@ function handleEvent(event) {
   }
 }
 
-async function handleMessageEvent(event) {
+function handleMessageEvent(event) {
   let send_flag = true;
 
   let msg = {
@@ -65,6 +65,7 @@ async function handleMessageEvent(event) {
       let city = eventText.split(' ')[1];
       // weather API
       let result = weather(city);
+      console.log(result);
       msg.text = `${result.location.name} ${result.current.condition.text}`;
       break;
   }
