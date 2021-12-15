@@ -93,7 +93,10 @@ async function handleMessageEvent(event) {
             type: 'text',
             text: `Board ${board.BID} Info\nTemperature: ${board.temperature} Humidity: ${board.humidity}\nPressure: ${board.pressure}\nAt: ${board.timestamp}`,
           },
-          { type: 'text', text: `${weather.location.name} ${weather.location.region}, ${weather.location.country} is ${weather.current.condition.text}` },
+          {
+            type: 'text',
+            text: `${weather.location.name} ${weather.location.region}, ${weather.location.country} is ${weather.current.condition.text}`,
+          },
         ];
       } catch (error) {
         console.log(error.data);
@@ -109,10 +112,29 @@ async function handleMessageEvent(event) {
 
 function watering(event) {
   axios.get(API_URL + '/watering').then((response) => {
+    let msg = { type: 'text', text: 'Fail' };
     if (response.data.result == true) {
-      return true;
+      msg.text = 'Watered!';
+    } else {
+      msg.text = 'Fail';
     }
-    return false;
+    axios
+      .post(
+        'https://api.line.me/v2/bot/message/push',
+        {
+          to: event.source.userId,
+          messages: [{ type: 'text', text: 'Watered!' }],
+        },
+        {
+          headers: {
+            Authorization: 'Bearer' + process.env.CHANNEL_ACC_TOKEN,
+          },
+        }
+      )
+      .then((response) => {})
+      .catch((error) => {
+        console.log(error.message);
+      });
   });
 }
 
