@@ -123,11 +123,11 @@ function watering(event) {
         'https://api.line.me/v2/bot/message/push',
         {
           to: event.source.userId,
-          messages: [{ type: 'text', text: 'Watered!' }],
+          messages: [msg],
         },
         {
           headers: {
-            Authorization: 'Bearer' + process.env.CHANNEL_ACC_TOKEN,
+            Authorization: 'Bearer ' + process.env.CHANNEL_ACC_TOKEN,
           },
         }
       )
