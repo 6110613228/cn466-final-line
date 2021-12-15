@@ -111,7 +111,7 @@ async function handleMessageEvent(event) {
         msg.text = 'Fail to get informations, Try checking the given ID';
       }
       break;
-  }
+  } // End switch case
 
   if (send_flag) {
     return client.replyMessage(event.replyToken, msg);
