@@ -54,8 +54,11 @@ async function handleMessageEvent(event) {
       msg.text = 'ควร';
       break;
     case /watering/.test(eventText):
+    case /รดน้ำ/.test(eventText):
       // watering API
       watering(event);
+
+      // set send flag to false
       send_flag = false;
       break;
     case /weather(?= ([A-Z]|[a-z]))/.test(eventText):
@@ -64,9 +67,14 @@ async function handleMessageEvent(event) {
     case /สภาพอากาศ(?= ([A-Z]|[a-z]))/.test(eventText):
       // weather API
       try {
+        // extract params
         let textArr = eventText.split(' ');
         let city = textArr.slice(1).join(' ');
+
+        // call API
         let result = await weather(city);
+
+        // gen message
         msg.text = `query: ${city} => ${result.location.country} ${result.location.name} ${result.location.region} ${result.current.condition.text}`;
       } catch (error) {
         msg.text =
@@ -116,7 +124,7 @@ function watering(event) {
     if (response.data.result == true) {
       msg.text = 'Watered!';
     } else {
-      msg.text = 'Fail';
+      msg.text = 'Fail to water, please try again.';
     }
     axios
       .post(
