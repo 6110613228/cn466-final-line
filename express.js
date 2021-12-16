@@ -113,9 +113,39 @@ async function handleMessageEvent(event) {
       break;
     case /หยุด(?= [0-9])/:
     case /stop(?= [0-9])/:
+      try {
+        // extract params
+        let textArr = eventText.split(' ');
+        let tid = textArr[1];
+
+        // call API
+        let result = await stopSchedule(tid);
+        if (result.result) {
+          msg.text = 'Schedule stopped';
+        } else {
+          msg.text = 'Fail to stop schedule';
+        }
+      } catch (error) {
+        msg.text = 'Fail to stop schedule';
+      }
       break;
     case /เริ่ม(?= [0-9])/:
     case /start(?= [0-9])/:
+      try {
+        // extract params
+        let textArr = eventText.split(' ');
+        let tid = textArr[1];
+
+        // call API
+        let result = await startSchedule(tid);
+        if (result.result) {
+          msg.text = 'Schedule started';
+        } else {
+          msg.text = 'Fail to start schedule';
+        }
+      } catch (error) {
+        msg.text = 'Fail to start schedule';
+      }
       break;
   } // End switch case
 
@@ -194,6 +224,32 @@ function getBInfo(bid) {
       });
 
     resolve(result);
+  });
+}
+
+function stopSchedule(tid) {
+  return new Promise((resolve, reject) => {
+    axios
+      .post(API_URL + '/stopSchedule', { schedule_id: tid })
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+function startSchedule(tid) {
+  return new Promise((resolve, reject) => {
+    axios
+      .post(API_URL + '/startSchedule', { schedule_id: tid })
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
   });
 }
 
