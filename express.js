@@ -43,7 +43,7 @@ async function handleMessageEvent(event) {
   };
 
   let eventText = event.message.text.toLowerCase();
-
+  console.log(eventText);
   switch (true) {
     case /^สวัสดี$/.test(eventText):
     case /^hello$/.test(eventText):
