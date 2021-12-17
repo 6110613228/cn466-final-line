@@ -147,8 +147,6 @@ async function handleMessageEvent(event) {
         msg.text = 'Fail to start schedule';
       }
       break;
-    case /^Schedule us made on every/.test(eventText):
-      break;
   } // End switch case
 
   if (send_flag) {
