@@ -71,8 +71,35 @@ async function handleMessageEvent(event) {
         // call API
         let result = await weather(city);
 
+        pm25 = result.current.air_quality.pm2_5;
+        let pm_text;
+        if (pm25 > 300) {
+          pm_text = "hazardous, don't go outside.";
+        } else if (pm25 > 250) {
+          pm_text =
+            'very unhealthy, please wear an appropriate mask when going outside.';
+        } else if (pm25 > 150) {
+          pm_text = "unhealthy, don't forget to wear a mask.";
+        } else if (pm25 > 100) {
+          pm_text = 'moderate.';
+        } else {
+          pm_text = 'good condition.';
+        }
         // gen message
-        msg.text = `query: ${city} => ${result.location.country} ${result.location.name} ${result.location.region} ${result.current.condition.text}`;
+        msg = [
+          {
+            type: 'text',
+            text: `${result.location.country} ${result.location.name}, ${result.location.region} is ${result.current.condition.text} at ${result.current.last_updated}.\n`,
+          },
+          {
+            type: 'text',
+            text: `It's ${result.current.temp_c} but feels like ${result.current.feelslike_c}.`,
+          },
+          {
+            type: 'text',
+            text: `PM2.5 ${result.current.air_quality.pm2_5} which is, ${pm_text}`,
+          },
+        ];
       } catch (error) {
         msg.text =
           "Fail to get the weather from your request, Maybe check the city's name";
