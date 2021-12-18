@@ -127,7 +127,7 @@ async function handleMessageEvent(event) {
           },
           {
             type: 'text',
-            text: `${weather.location.name} ${weather.location.region}, ${weather.location.country} is ${weather.current.condition.text}`,
+            text: `At board's location: ${weather.location.name} ${weather.location.region}, ${weather.location.country} is ${weather.current.condition.text}`,
           },
         ];
       } catch (error) {
