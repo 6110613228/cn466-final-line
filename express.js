@@ -81,23 +81,23 @@ async function handleMessageEvent(event) {
         } else if (pm25 > 150) {
           pm_text = "unhealthy, don't forget to wear a mask.";
         } else if (pm25 > 100) {
-          pm_text = 'moderate.';
+          pm_text = 'moderate according to US AQI.';
         } else {
-          pm_text = 'good condition.';
+          pm_text = 'in good condition.';
         }
         // gen message
         msg = [
           {
             type: 'text',
-            text: `${result.location.country} ${result.location.name}, ${result.location.region} is ${result.current.condition.text} at ${result.current.last_updated}.\n`,
+            text: `${result.location.country} ${result.location.name}, ${result.location.region} is ${result.current.condition.text} at ${result.current.last_updated}.`,
           },
           {
             type: 'text',
-            text: `It's ${result.current.temp_c} but feels like ${result.current.feelslike_c}.`,
+            text: `It's ${result.current.temp_c}C but feels like ${result.current.feelslike_c}C.`,
           },
           {
             type: 'text',
-            text: `PM2.5 ${result.current.air_quality.pm2_5} which is, ${pm_text}`,
+            text: `PM2.5 index: ${result.current.air_quality.pm2_5} which is, ${pm_text}`,
           },
         ];
       } catch (error) {
