@@ -135,8 +135,8 @@ async function handleMessageEvent(event) {
         msg.text = 'Fail to get informations, Try checking the given ID';
       }
       break;
-    case /หยุด(?= [0-9])/:
-    case /stop(?= [0-9])/:
+    case /หยุด(?= [0-9])/.test(eventText):
+    case /stop(?= [0-9])/.test(eventText):
       try {
         // extract params
         let textArr = eventText.split(' ');
@@ -153,8 +153,8 @@ async function handleMessageEvent(event) {
         msg.text = 'Fail to stop schedule';
       }
       break;
-    case /เริ่ม(?= [0-9])/:
-    case /start(?= [0-9])/:
+    case /เริ่ม(?= [0-9])/.test(eventText):
+    case /start(?= [0-9])/.test(eventText):
       try {
         // extract params
         let textArr = eventText.split(' ');
