@@ -185,7 +185,7 @@ function watering(event) {
 function weather(city) {
   return new Promise((resolve, reject) => {
     axios
-      .post(API_URL + '/getWeatherByCity', { city: city })
+      .post(API_URL + '/getWeather', { city: city })
       .then((response) => {
         resolve(response.data);
       })
@@ -213,7 +213,7 @@ function getBInfo(bid) {
       });
 
     await axios
-      .post(API_URL + '/getWeatherByCity', {
+      .post(API_URL + '/getWeather', {
         city: result.board.location,
       })
       .then((response) => {
