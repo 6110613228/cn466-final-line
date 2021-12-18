@@ -50,9 +50,6 @@ async function handleMessageEvent(event) {
     case /^hi$/.test(eventText):
       msg.text = 'Hello';
       break;
-    case /ควรรดน้ำไหม/.test(eventText):
-      msg.text = 'ควร';
-      break;
     case /watering/.test(eventText):
     case /รดน้ำ/.test(eventText):
       // watering API
