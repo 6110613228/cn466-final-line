@@ -184,11 +184,13 @@ async function handleMessageEvent(event) {
 function watering(event) {
   axios
     .post(API_URL + '/watering', {
-      uid: event.source.eventId,
+      uid: event.source.userId,
     })
-    .then((response) => {})
+    .then((response) => {
+      console.log(response.data);
+    })
     .catch((error) => {
-      console.log(error);
+      console.log(error.message);
     });
 }
 
