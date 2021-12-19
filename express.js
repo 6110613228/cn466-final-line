@@ -182,31 +182,14 @@ async function handleMessageEvent(event) {
 }
 
 function watering(event) {
-  axios.get(API_URL + '/watering').then((response) => {
-    let msg = { type: 'text', text: 'Fail' };
-    if (response.data.result == true) {
-      msg.text = 'Watered!';
-    } else {
-      msg.text = 'Fail to water, please try again.';
-    }
-    axios
-      .post(
-        'https://api.line.me/v2/bot/message/push',
-        {
-          to: event.source.userId,
-          messages: [msg],
-        },
-        {
-          headers: {
-            Authorization: 'Bearer ' + process.env.CHANNEL_ACC_TOKEN,
-          },
-        }
-      )
-      .then((response) => {})
-      .catch((error) => {
-        console.log(error.message);
-      });
-  });
+  axios
+    .post(API_URL + '/watering', {
+      uid: event.source.eventId,
+    })
+    .then((response) => {})
+    .catch((error) => {
+      console.log(error);
+    });
 }
 
 function weather(city) {
